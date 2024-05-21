@@ -1,0 +1,22 @@
+.display {
+    width: 320px;
+    height: 120px;
+    background-color: #222;
+    color: white;
+    font-size: 2rem;
+    display: flex;
+    align-items: end;
+    /* justify-content: flex-end; */
+    flex-direction: column;
+    padding: 0 20px;
+    margin-bottom: 20px;
+    /* right: 0; */
+    /* position: relative;*/
+    border-radius: 8px;
+}
+
+.statement{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: block;
+}

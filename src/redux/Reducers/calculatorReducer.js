@@ -10,50 +10,83 @@ const initialState = {
 
 };
 
+const performCalculation = (state) => {
+  const prev = parseFloat(state.previousValue);
+  const curr = parseFloat(state.currentValue);
+  if (state.operator && prev !== null && curr !== null) {
+    switch (state.operator) {
+      case "+":
+        state.result = prev + curr;
+        break;
+
+      case "-":
+        state.result = prev + curr;
+        break;
+
+      case "*":
+        state.result = prev * curr;
+        break;
+
+      case "/":
+        state.result = prev / curr;
+        break;
+
+      case "%":
+        state.result = prev % curr;
+        break;
+
+      default:
+        return;
+    }
+  }
+};
+
 
 const calculatorSlice = createSlice({
-    name : "calculator",
-    initialState : initialState,
-    reducers : {
-        digitInput : (state, action) => { //this will be used when entering the number
-            //state.previousValue = state.currentValue; // this will keep track of previous value
-            state.currentValue = state.currentValue === "0"? action.payload : state.currentValue + action.payload // this to update current value
-            state.statement = state.statement+action.payload // this will update the statement
-        },
+  name: "calculator",
+  initialState: initialState,
+  reducers: {
+    digitInput: (state, action) => {
+        console.log("Digit clicked : ", action.payload);
+      //this will be used when entering the number
+      //state.previousValue = state.currentValue; // this will keep track of previous value
+      state.currentValue =
+        state.currentValue === "0"
+          ? action.payload
+          : state.currentValue + action.payload; // this to update current value
+      state.statement = state.statement + action.payload; // this will update the statement
+    },
 
-        operatorInput : (state, action) => {
-            state.statement = state.statement+action.payload;
-            if(state.operator){
-                state.previousValue = state.result || state.currentValue
-                state.currentValue = "0"
-            }
-            state.operator = action.payload;
-        },
+    operatorInput: (state, action) => {
+      if (state.operator) {
+        performCalculation(state)
+        state.previousValue = state.result || state.currentValue;
+        state.currentValue = "0";
+        state.statement = state.statement + action.payload;
+      }
+      state.operator = action.payload;
+    },
 
-        clearInput : (state, action) => {
-            Object.assign(state, initialState);
-        },
+    clearInput: (state, action) => {
+      Object.assign(state, initialState);
+    },
 
-        decimalInput : (state, action) => {
-            if(state.currentValue.charAt(state.currentValue.length - 1) !== "."){// this will not allow insertion of 2 decimals at a time
-                state.statement = state.statement + action.payload;
-                state.currentValue += "."
-            }
-        },
+    decimalInput: (state, action) => {
+      if (state.currentValue.charAt(state.currentValue.length - 1) !== ".") {
+        // this will not allow insertion of 2 decimals at a time
+        state.statement = state.statement + action.payload;
+        state.currentValue += ".";
+      }
+    },
 
-        calculateInput: (state, action) => {
-            switch(action.operator){
-                case "+":
-                    break;
-
-                default:
-                    return
-            }
-        }
-
-    }
-})
+    calculateInput: (state, action) => {
+      performCalculation(state);
+      state.statement = state.result;
+      state.result = null;
+    },
+  },
+});
 
 export const calculateReducer = calculatorSlice.reducer;
-export const {} = calculatorSlice.actions;
+export const {digitInput, operatorInput, clearInput, decimalInput, calculateInput} = calculatorSlice.actions;
 export const calculateSelector = (state) => state.calculateReducer;

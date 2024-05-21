@@ -1,0 +1,21 @@
+
+.keyBoardContainer {
+    width: 320px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+}
+
+.keyBoardContainer button {
+    height: 60px;
+    font-size: 1.5rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border-radius: 5px;
+}
+
+.keyBoardContainer button:hover {
+    background-color: #f0f0f0;
+}

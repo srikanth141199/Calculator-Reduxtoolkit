@@ -6,11 +6,14 @@ import Keyboard from './components/keyboard/Keyboard';
 
 function App() {
   return (
-    <Provider store = {store}>
-      <h1>Calculator</h1>
-      <Display/>
-      <Keyboard/>
-    </Provider>
+    <div className='App'>
+      <Provider store = {store}>
+        <h1>Calculator</h1>
+        <Display/>
+        <Keyboard/>
+      </Provider>
+    </div>
+    
   );
 }
 
