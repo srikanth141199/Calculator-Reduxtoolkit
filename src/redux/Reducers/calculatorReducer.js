@@ -20,7 +20,7 @@ const performCalculation = (state) => {
         break;
 
       case "-":
-        state.result = prev + curr;
+        state.result = prev - curr;
         break;
 
       case "*":
@@ -47,7 +47,7 @@ const calculatorSlice = createSlice({
   initialState: initialState,
   reducers: {
     digitInput: (state, action) => {
-        console.log("Digit clicked : ", action.payload);
+        //console.log("Digit clicked : ", action.payload);
       //this will be used when entering the number
       //state.previousValue = state.currentValue; // this will keep track of previous value
       state.currentValue =
@@ -58,13 +58,22 @@ const calculatorSlice = createSlice({
     },
 
     operatorInput: (state, action) => {
+        console.log("state operator : ", state.operator);
+        console.log("action Operator : ", action.payload);
       if (state.operator) {
         performCalculation(state)
         state.previousValue = state.result || state.currentValue;
         state.currentValue = "0";
         state.statement = state.statement + action.payload;
+        state.operator = action.payload;
       }
-      state.operator = action.payload;
+      else{
+        state.previousValue = state.currentValue;
+        state.currentValue = "0";
+        state.statement = state.statement + action.payload;
+        state.operator = action.payload;
+      }
+      
     },
 
     clearInput: (state, action) => {
